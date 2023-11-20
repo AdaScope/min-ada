@@ -1,0 +1,28 @@
+on:                    # Run the workflow for each of the following event:
+  push:                # - A branch is pushed or updated.
+  pull_request:        # - A pull-request is openned or updated.
+  workflow_dispatch:   # - A manual run of the workflow is requested
+  release:
+    types: [created]   # - A release is created.
+
+jobs:
+  build:
+    strategy:
+
+      fail-fast: false # Don't stop all the workflows when one of them fails.
+
+      matrix:
+        os: [ubuntu-latest] # List of GitHuh Actions platform to run the workflow on
+
+    runs-on: ${{ matrix.os }} # Run the continous integration workflow on each OS listed in the matrix.
+
+    steps:
+        # Check-out the repository
+      - uses: actions/checkout@v2
+
+        # Install and setup Alire package manager
+      - uses: alire-project/setup-alire@v2
+
+      - name: Build the protocol
+        run: |
+          alr build

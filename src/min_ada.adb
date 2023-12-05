@@ -116,7 +116,7 @@ package body Min_Ada is
             System.CRC32.Update (Context.Rx_Checksum, Character'Val (Data));
 
             if MSB_Is_One (
-               Data    => Data
+               Data => Data
             )
             then
                Context.Rx_Frame_State := SEARCHING_FOR_SOF;
@@ -189,7 +189,7 @@ package body Min_Ada is
    end Rx_Bytes;
 
    procedure Valid_Frame_Received (
-      Context : in out Min_Context
+      Context : Min_Context
    ) is
    begin
       Min_Application_Handler (
@@ -252,6 +252,7 @@ package body Min_Ada is
       end if;
    end MSB_Is_One;
 
+   --  To override Min_Application_Handler
    procedure Set_Min_Application_Handler_Callback (
       Callback : Min_Application_Handler_Access
    ) is
@@ -259,6 +260,7 @@ package body Min_Ada is
       Min_Application_Handler_Callback := Callback;
    end Set_Min_Application_Handler_Callback;
 
+   --  To override Tx_Byte
    procedure Set_Tx_Byte_Callback (
       Callback : Tx_Byte_Access
    ) is

@@ -43,7 +43,7 @@ package Min_Ada is
 
    type CRC_Bytes is array (1 .. 4) of Byte;
 
-   type Min_Context is tagged record
+   type Min_Context is record
 
       --  Payload received so far
       Rx_Frame_Payload_Buffer  : Min_Payload;
@@ -85,6 +85,20 @@ package Min_Ada is
       Port                     : Byte;
    end record;
 
+   --  Type for overriding Min_Application_Handler
+   type Min_Application_Handler_Access is access
+      procedure (
+         ID             : App_ID;
+         Payload        : Min_Payload;
+         Payload_Length : Byte
+      );
+
+   --  Type for overriding Tx_Byte
+   type Tx_Byte_Access is access
+      procedure (
+         Data : Byte
+      );
+
    procedure Send_Frame (
       Context        : in out Min_Context;
       ID             : App_ID;
@@ -112,7 +126,7 @@ package Min_Ada is
    );
 
    procedure Valid_Frame_Received (
-      Context : in out Min_Context
+      Context : Min_Context
    );
 
    function MSB_Is_One (
@@ -124,18 +138,6 @@ package Min_Ada is
       Payload        : Min_Payload;
       Payload_Length : Byte
    );
-
-   type Min_Application_Handler_Access is access
-      procedure (
-         ID             : App_ID;
-         Payload        : Min_Payload;
-         Payload_Length : Byte
-      );
-
-   type Tx_Byte_Access is access
-      procedure (
-         Data : Byte
-      );
 
    procedure Set_Min_Application_Handler_Callback (
       Callback : Min_Application_Handler_Access

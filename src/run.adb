@@ -1,3 +1,4 @@
+with My_Min_Ada;
 with Min_Ada;
 with GNAT.Serial_Communications;
 with Ada.Streams;
@@ -13,6 +14,9 @@ procedure Run is
    Buffer : Ada.Streams.Stream_Element_Array (1 .. 1);
    Offset : Ada.Streams.Stream_Element_Offset := 1;
 begin
+
+   My_Min_Ada.Override_Min_Application_Handler;
+   My_Min_Ada.Override_Tx_Byte;
 
    --  Init the context
    Min_Ada.Min_Init_Context (Context);

@@ -1,16 +1,17 @@
 # min-ada
-This is a repo that is used to implement the min protocol in Ada
+This is a repo that is used to implement the min protocol in Ada.\
 See https://github.com/min-protocol/min for more info.
 
 ## How to use
 To use the protocol, you have to override two procedures: Min_Application_Handler and Tx_Byte.
 
-Make sure to call the two procedures Override_Min_Application_Handler and Override_Tx_Byte in your code.
-This will that the default implementations get overriden by the new ones you will be defining.
+**Make sure to call the two procedures `Override_Min_Application_Handler` and `Override_Tx_Byte` in your code.**\
+This will make sure that the default implementations get overriden by the new ones you will be defining.
 
 ### Min_Application_Handler
 #### Your .ads file should be exactly like this:
 
+```ada
 with Min_Ada; use Min_Ada;
 
 package My_Min_Ada is
@@ -23,9 +24,11 @@ package My_Min_Ada is
 
    procedure Override_Min_Application_Handler;
 end My_Min_Ada;
+```
 
 #### And your .abd file should look something like this:
 
+```ada
 with Uart;
 with Globals;
 
@@ -49,10 +52,12 @@ package body My_Min_Ada is
       );
    end Override_Min_Application_Handler;
 end My_Min_Ada;
+```
 
 ### Tx_Byte
 #### Your .ads file should be exactly like this:
 
+```ada
 with Min_Ada; use Min_Ada;
 
 package My_Min_Ada is
@@ -63,9 +68,11 @@ package My_Min_Ada is
 
    procedure Override_Tx_Byte;
 end My_Min_Ada;
+```
 
 #### And your .abd file should look something like this:
 
+```ada
 with STM32.USARTs; use STM32.USARTs;
 with STM32.Device; use STM32.Device;
 with Uart_For_Board;
@@ -90,3 +97,4 @@ package body My_Min_Ada is
    end Override_Tx_Byte;
 
 end My_Min_Ada;
+```
